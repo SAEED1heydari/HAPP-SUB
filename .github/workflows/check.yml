@@ -1,0 +1,33 @@
+name: AUTO HAPP SUB
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Cleaner
+        run: |
+          python cleaner.py
+
+      - name: Upload Files
+        run: |
+          git config --global user.name "SAEED"
+          git config --global user.email "saeed@users.noreply.github.com"
+
+          git add clean.txt sub.txt
+
+          git diff --cached --quiet || git commit -m "AUTO UPDATE"
+
+          git push
